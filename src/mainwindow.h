@@ -11,15 +11,14 @@ class QTreeView;
 
 class VMInfo;
 
-class MainWindow : public KXmlGuiWindow
-{
+class MainWindow : public KXmlGuiWindow {
 public:
-    explicit MainWindow(VMInfo *vmInfo, QWidget *parent = nullptr);
+    explicit MainWindow(VMInfo* vmInfo, QWidget* parent = nullptr);
 
 private:
-    QSplitter *m_splitter;
-    QTreeView *m_vmView;
-    VMInfo *m_vmInfo;
+    QSplitter* m_splitter;
+    QTreeView* m_vmView;
+    VMInfo* m_vmInfo;
 };
 
 #endif // MAINWINDOW_H

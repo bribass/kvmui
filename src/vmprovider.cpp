@@ -5,17 +5,13 @@
 
 #include <QIcon>
 
-VMProvider::VMProvider(const QString& desc, const QString& icon) : m_description(desc), m_iconName(icon)
-{
-}
+VMProvider::VMProvider(const QString& desc, const QString& icon)
+: m_description(desc), m_iconName(icon) {}
 
-const QString& VMProvider::uiDescription() const
-{
+const QString& VMProvider::uiDescription() const {
     return m_description;
 }
 
-QIcon VMProvider::uiIcon() const
-{
+QIcon VMProvider::uiIcon() const {
     return QIcon::fromTheme(m_iconName);
 }
-

@@ -54,4 +54,3 @@ ecm_install_icons(DESTINATION share/icons ICONS
 
 # And summarize
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
-

@@ -10,8 +10,8 @@
 
 #include "vminfo.h"
 
-MainWindow::MainWindow(VMInfo *vmInfo, QWidget *parent) : KXmlGuiWindow(parent), m_vmInfo(vmInfo)
-{
+MainWindow::MainWindow(VMInfo* vmInfo, QWidget* parent)
+: KXmlGuiWindow(parent), m_vmInfo(vmInfo) {
     // horizontal separation between VM tree (on left) and VM display (on right)
     m_splitter = new QSplitter();
     setCentralWidget(m_splitter);
