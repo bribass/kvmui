@@ -46,5 +46,5 @@ int main(int argc, char** argv) {
     // Create the main window
     auto* main_window = new MainWindow(vmInfo);
     main_window->show();
-    return app.exec();
+    return QApplication::exec();
 }

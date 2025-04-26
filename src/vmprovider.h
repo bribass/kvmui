@@ -11,8 +11,8 @@ class QIcon;
 class VMProvider {
 public:
     explicit VMProvider(const QString& desc, const QString& icon);
-    const QString& uiDescription() const;
-    QIcon uiIcon() const;
+    [[nodiscard]] const QString& uiDescription() const;
+    [[nodiscard]] QIcon uiIcon() const;
 
 private:
     QString m_description;
