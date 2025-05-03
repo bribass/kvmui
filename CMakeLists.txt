@@ -35,6 +35,8 @@ target_sources(kvmui PRIVATE
         src/mainwindow.cpp
         src/vminfo.cpp
         src/vmprovider.cpp
+        src/vmprovideraddwizard.cpp
+        src/providers/quickemu.cpp
 )
 target_include_directories(kvmui PRIVATE src)
 target_link_libraries(kvmui

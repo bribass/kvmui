@@ -38,13 +38,10 @@ int main(int argc, char** argv) {
     aboutData.processCommandLine(&parser);
 
     // Load the VMInfo with configuration
-    auto* vmInfo = new VMInfo();
-    vmInfo->addProvider(new VMProvider(u"alpha"_s, u"arrow-up"_s));
-    vmInfo->addProvider(new VMProvider(u"bravo"_s, u"kvmui-hv-quickemu"_s));
-    vmInfo->addProvider(new VMProvider(u"charlie"_s, u"arrow-down"_s));
+    auto vmInfo = new VMInfo();
 
     // Create the main window
-    auto* main_window = new MainWindow(vmInfo);
+    auto main_window = new MainWindow(vmInfo);
     main_window->show();
     return QApplication::exec();
 }

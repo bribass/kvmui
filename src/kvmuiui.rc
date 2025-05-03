@@ -5,4 +5,15 @@
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:schemaLocation="https://www.kde.org/standards/kxmlgui/1.0
                          https://www.kde.org/standards/kxmlgui/1.0/kxmlgui.xsd">
+    <MenuBar>
+        <Menu>
+            <text>&amp;Providers</text>
+            <Action name="provider_add"/>
+        </Menu>
+    </MenuBar>
+
+    <ToolBar name="mainToolBar">
+        <text>Main Toolbar</text>
+        <Action name="provider_add"/>
+    </ToolBar>
 </gui>

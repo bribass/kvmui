@@ -3,12 +3,18 @@
 
 #include "vminfo.h"
 
-#include <QIcon>
-
 #include "vmprovider.h"
+#include "vmprovideraddwizard.h"
 
-void VMInfo::addProvider(VMProvider* provider) {
-    m_providers.push_back(provider);
+void VMInfo::addProvider(QWidget* parent) {
+    auto wiz = new VMProviderAddWizard(this, parent);
+    wiz->show();
+}
+
+void VMInfo::appendProvider(VMProvider* provider) {
+    beginInsertRows({}, m_providers.count(), m_providers.count());
+    m_providers.append(provider);
+    endInsertRows();
 }
 
 QModelIndex VMInfo::index(int row, int column, const QModelIndex& parent) const {

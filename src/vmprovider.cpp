@@ -3,15 +3,13 @@
 
 #include "vmprovider.h"
 
-#include <QIcon>
+std::map<const char*, VMProvider*> VMProvider::s_types = {};
 
-VMProvider::VMProvider(const QString& desc, const QString& icon)
-: m_description(desc), m_iconName(icon) {}
-
-const QString& VMProvider::uiDescription() const {
-    return m_description;
+bool VMProvider::register_provider(const char* name, VMProvider* provider) {
+    s_types[name] = provider;
+    return true;
 }
 
-QIcon VMProvider::uiIcon() const {
-    return QIcon::fromTheme(m_iconName);
+VMProvider::ProviderMap& VMProvider::get_providers() {
+    return s_types;
 }

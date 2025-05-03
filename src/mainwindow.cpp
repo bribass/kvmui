@@ -3,12 +3,18 @@
 
 #include "mainwindow.h"
 
+#include <QApplication>
+#include <QAction>
 #include <QLabel>
 #include <QSplitter>
 #include <QTreeView>
+#include <KActionCollection>
 #include <KLocalizedString>
+#include <KStandardAction>
 
 #include "vminfo.h"
+
+using namespace Qt::Literals::StringLiterals;
 
 MainWindow::MainWindow(VMInfo* vmInfo, QWidget* parent)
 : KXmlGuiWindow(parent), m_vmInfo(vmInfo) {
@@ -17,19 +23,37 @@ MainWindow::MainWindow(VMInfo* vmInfo, QWidget* parent)
     setCentralWidget(m_splitter);
 
     // the VM tree
-    m_vmView = new QTreeView();
+    m_vmView = new QTreeView(m_splitter);
     m_vmView->setHeaderHidden(true);
     m_vmView->setModel(m_vmInfo);
-    m_splitter->addWidget(m_vmView);
 
     // the VM display
-    auto m_vmDisplay = new QLabel();
+    auto m_vmDisplay = new QLabel(m_splitter);
     m_vmDisplay->setText(i18n("PLACEHOLDER"));
     m_vmDisplay->setMinimumWidth(200);
     m_vmDisplay->setMinimumHeight(200);
     m_vmDisplay->setAlignment(Qt::AlignCenter);
-    m_splitter->addWidget(m_vmDisplay);
 
     // done!
-    setupGUI();
+    setupActions();
+}
+
+MainWindow::~MainWindow() {
+    delete m_vmView;
+    delete m_splitter;
+}
+
+void MainWindow::setupActions() {
+    // Add VM Provider
+    auto providerAddAction = new QAction(this);
+    providerAddAction->setText(i18n("&Add VM Provider"));
+    providerAddAction->setIcon(QIcon::fromTheme(u"list-add-symbolic"_s));
+    actionCollection()->addAction(u"provider_add"_s, providerAddAction);
+    actionCollection()->setDefaultShortcut(providerAddAction, Qt::CTRL | Qt::Key_A); // NOLINT(*-static-accessed-through-instance)
+    connect(providerAddAction, &QAction::triggered, m_vmInfo, [=]() { m_vmInfo->addProvider(this); });
+
+    // Quit
+    KStandardAction::quit(qApp, &QCoreApplication::quit, actionCollection());
+
+    setupGUI(Default, u"kvmuiui.rc"_s);
 }

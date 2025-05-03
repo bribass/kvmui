@@ -9,8 +9,13 @@
 class VMProvider;
 
 class VMInfo : public QAbstractItemModel {
+    Q_OBJECT
+
+public Q_SLOTS:
+    void addProvider(QWidget* parent);
+
 public:
-    void addProvider(VMProvider* provider);
+    void appendProvider(VMProvider* provider);
 
     // QAbstractItemModel members
     QModelIndex index(int row, int column, const QModelIndex& parent) const override;
