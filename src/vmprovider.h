@@ -19,7 +19,7 @@ public:
     explicit VMProvider() = default;
 
     // Registration of subclasses
-#define REGISTER_VMPROVIDER(x) static auto dummy = VMProvider::register_provider(#x, new x);
+#define REGISTER_VMPROVIDER(x) static auto dummy = VMProvider::register_provider(#x, new (x));
     typedef QMap<QString, VMProvider*> ProviderMap;
 public:
     static bool register_provider(const char* name, VMProvider* provider);

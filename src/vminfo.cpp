@@ -12,7 +12,8 @@ void VMInfo::addProvider(QWidget* parent) {
 }
 
 void VMInfo::appendProvider(VMProvider* provider) {
-    beginInsertRows({}, m_providers.count(), m_providers.count());
+    const int oldSize = static_cast<int>(m_providers.count());
+    beginInsertRows({}, oldSize, oldSize);
     m_providers.append(provider);
     endInsertRows();
 }
@@ -46,7 +47,7 @@ QVariant VMInfo::data(const QModelIndex& index, int role) const {
         return {};
     if(role == Qt::DisplayRole || role == Qt::EditRole)
         return m_providers.at(index.row())->uiDescription();
-    else if(role == Qt::DecorationRole)
+    if(role == Qt::DecorationRole)
         return m_providers.at(index.row())->uiIcon();
     return {};
 }

@@ -50,7 +50,7 @@ void MainWindow::setupActions() {
     providerAddAction->setIcon(QIcon::fromTheme(u"list-add-symbolic"_s));
     actionCollection()->addAction(u"provider_add"_s, providerAddAction);
     actionCollection()->setDefaultShortcut(providerAddAction, Qt::CTRL | Qt::Key_A); // NOLINT(*-static-accessed-through-instance)
-    connect(providerAddAction, &QAction::triggered, m_vmInfo, [=]() { m_vmInfo->addProvider(this); });
+    connect(providerAddAction, &QAction::triggered, m_vmInfo, [=] { m_vmInfo->addProvider(this); });
 
     // Quit
     KStandardAction::quit(qApp, &QCoreApplication::quit, actionCollection());

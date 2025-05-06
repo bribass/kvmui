@@ -18,11 +18,11 @@ public:
     void appendProvider(VMProvider* provider);
 
     // QAbstractItemModel members
-    QModelIndex index(int row, int column, const QModelIndex& parent) const override;
-    QModelIndex parent(const QModelIndex& child) const override;
-    int rowCount(const QModelIndex& parent) const override;
-    int columnCount(const QModelIndex& parent) const override;
-    QVariant data(const QModelIndex& index, int role) const override;
+    [[nodiscard]] QModelIndex index(int row, int column, const QModelIndex& parent) const override;
+    [[nodiscard]] QModelIndex parent(const QModelIndex& child) const override;
+    [[nodiscard]] int rowCount(const QModelIndex& parent) const override;
+    [[nodiscard]] int columnCount(const QModelIndex& parent) const override;
+    [[nodiscard]] QVariant data(const QModelIndex& index, int role) const override;
 
 private:
     QList<VMProvider*> m_providers;

@@ -33,7 +33,7 @@ void QuickemuProvider::addConfigure(VMProviderAddWizardConfigPage* page, QGridLa
 
     auto browse = new QPushButton();
     browse->setIcon(QIcon::fromTheme(u"folder-symbolic"_s));
-    connect(browse, &QPushButton::clicked, this, [=]() {
+    connect(browse, &QPushButton::clicked, this, [=] {
         auto dir = QFileDialog::getExistingDirectory(page, i18n("Select the directory that contains Quickemu VMs"), field->text());
         if(!dir.isNull()) {
             field->setText(dir);

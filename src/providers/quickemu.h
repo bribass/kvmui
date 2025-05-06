@@ -15,13 +15,13 @@ public:
     explicit QuickemuProvider(const QString& dir);
 
     // Methods for providing UI elements for Add Provider wizard
-    QString addDescription() const override;
+    [[nodiscard]] QString addDescription() const override;
     void addConfigure(VMProviderAddWizardConfigPage* page, QGridLayout* layout) override;
     VMProvider* addFinalize(VMProviderAddWizard* wizard) override;
 
     // Methods for providing UI elements for VMInfo model
-    QString uiDescription() const override;
-    QIcon uiIcon() const override;
+    [[nodiscard]] QString uiDescription() const override;
+    [[nodiscard]] QIcon uiIcon() const override;
 
 private:
     QString m_dir;
