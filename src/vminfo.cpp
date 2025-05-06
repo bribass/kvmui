@@ -3,6 +3,9 @@
 
 #include "vminfo.h"
 
+#include <KConfigGroup>
+#include <KSharedConfig>
+
 #include "vmprovider.h"
 #include "vmprovideraddwizard.h"
 
@@ -37,6 +40,12 @@ void VMInfo::appendProvider(VMProvider* provider) {
     beginInsertRows({}, oldSize, oldSize);
     m_providers.append(provider);
     endInsertRows();
+
+    // Serialize the new provider list to configuration
+    KSharedConfigPtr config = KSharedConfig::openConfig();
+    KConfigGroup vmConfig(config, u"VmProviders"_s);
+    vmConfig.writeEntry("Providers", toConfig());
+    vmConfig.config()->sync();
 }
 
 QModelIndex VMInfo::index(int row, int column, const QModelIndex& parent) const {

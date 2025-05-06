@@ -3,9 +3,11 @@
 
 #include <QApplication>
 #include <QCommandLineParser>
-#include <KMessageBox>
 #include <KAboutData>
+#include <KConfigGroup>
 #include <KLocalizedString>
+#include <KMessageBox>
+#include <KSharedConfig>
 
 #include "mainwindow.h"
 #include "vminfo.h"
@@ -38,7 +40,10 @@ int main(int argc, char** argv) {
     aboutData.processCommandLine(&parser);
 
     // Load the VMInfo with configuration
-    auto vmInfo = new VMInfo();
+    KSharedConfigPtr config = KSharedConfig::openConfig();
+    KConfigGroup vmConfig(config, u"VmProviders"_s);
+    QStringList vmProviderList = vmConfig.readEntry("Providers", QStringList());
+    auto vmInfo = VMInfo::fromConfig(vmProviderList);
 
     // Create the main window
     auto main_window = new MainWindow(vmInfo);
