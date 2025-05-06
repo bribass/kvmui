@@ -3,10 +3,10 @@
 
 #include "vmprovider.h"
 
-std::map<const char*, VMProvider*> VMProvider::s_types = {};
+QMap<QString, VMProvider*> VMProvider::s_types = {};
 
 bool VMProvider::register_provider(const char* name, VMProvider* provider) {
-    s_types[name] = provider;
+    s_types[QString::fromUtf8(name)] = provider;
     return true;
 }
 

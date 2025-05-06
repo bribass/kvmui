@@ -49,8 +49,8 @@ VMProviderAddWizardSelectPage::VMProviderAddWizardSelectPage(VMProvider** pProvi
 
     m_list = new QListWidget();
     for(auto it : VMProvider::get_providers()) {
-        auto item = new QListWidgetItem(it.second->uiIcon(), it.second->addDescription());
-        item->setData(Qt::UserRole, QVariant::fromValue(static_cast<void*>(it.second)));
+        auto item = new QListWidgetItem(it->uiIcon(), it->addDescription());
+        item->setData(Qt::UserRole, QVariant::fromValue(static_cast<void*>(it)));
         m_list->addItem(item);
     }
     m_list->setSelectionMode(QAbstractItemView::SingleSelection);

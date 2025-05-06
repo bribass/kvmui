@@ -20,7 +20,7 @@ public:
 
     // Registration of subclasses
 #define REGISTER_VMPROVIDER(x) static auto dummy = VMProvider::register_provider(#x, new x);
-    typedef std::map<const char*, VMProvider*> ProviderMap;
+    typedef QMap<QString, VMProvider*> ProviderMap;
 public:
     static bool register_provider(const char* name, VMProvider* provider);
     static ProviderMap& get_providers();
