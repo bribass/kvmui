@@ -5,6 +5,7 @@
 
 #include <QFileDialog>
 #include <QGridLayout>
+#include <QJsonObject>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
@@ -18,6 +19,16 @@ REGISTER_VMPROVIDER(QuickemuProvider)
 
 QuickemuProvider::QuickemuProvider(const QString& dir)
 : m_dir(dir) {}
+
+VMProvider* QuickemuProvider::fromConfigJson(const QJsonObject& obj) {
+    auto provider = new QuickemuProvider();
+    provider->m_dir = obj[u"dir"_s].toString();
+    return provider;
+}
+
+void QuickemuProvider::toConfigJson(QJsonObject* obj) {
+    obj->insert(u"dir"_s, m_dir);
+}
 
 QString QuickemuProvider::addDescription() const {
     return i18n("Quickemu");

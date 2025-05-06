@@ -11,6 +11,11 @@ class VMProvider;
 class VMInfo : public QAbstractItemModel {
     Q_OBJECT
 
+public:
+    // Serialization
+    static VMInfo* fromConfig(const QStringList& config);
+    QStringList toConfig();
+
 public Q_SLOTS:
     void addProvider(QWidget* parent);
 

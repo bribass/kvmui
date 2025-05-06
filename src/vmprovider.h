@@ -27,6 +27,13 @@ public:
 protected:
     static ProviderMap s_types;
 
+public:
+    // Serialization
+    static VMProvider* fromConfigString(const QString& config);
+    virtual VMProvider* fromConfigJson(const QJsonObject& obj) = 0;
+    QString toConfigString();
+    virtual void toConfigJson(QJsonObject* obj) = 0;
+
     // Methods for providing UI elements for Add Provider wizard
 public:
     [[nodiscard]] virtual QString addDescription() const = 0;

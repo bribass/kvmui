@@ -6,6 +6,27 @@
 #include "vmprovider.h"
 #include "vmprovideraddwizard.h"
 
+using namespace Qt::Literals::StringLiterals;
+
+VMInfo* VMInfo::fromConfig(const QStringList& config) {
+    auto newInfo = new VMInfo();
+    for(const auto& string : config) {
+        VMProvider* newProvider = VMProvider::fromConfigString(string);
+        if(newProvider) {
+            newInfo->m_providers.append(newProvider);
+        }
+    }
+    return newInfo;
+}
+
+QStringList VMInfo::toConfig() {
+    QStringList list;
+    for(auto provider : m_providers) {
+        list.append(provider->toConfigString());
+    }
+    return list;
+}
+
 void VMInfo::addProvider(QWidget* parent) {
     auto wiz = new VMProviderAddWizard(this, parent);
     wiz->show();

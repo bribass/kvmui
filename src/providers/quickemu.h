@@ -14,6 +14,10 @@ public:
     explicit QuickemuProvider() = default;
     explicit QuickemuProvider(const QString& dir);
 
+    // Serialization
+    VMProvider* fromConfigJson(const QJsonObject& obj) override;
+    void toConfigJson(QJsonObject* obj) override;
+
     // Methods for providing UI elements for Add Provider wizard
     [[nodiscard]] QString addDescription() const override;
     void addConfigure(VMProviderAddWizardConfigPage* page, QGridLayout* layout) override;
