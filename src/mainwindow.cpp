@@ -7,7 +7,7 @@
 #include <QAction>
 #include <QLabel>
 #include <QSplitter>
-#include <QTreeView>
+#include <QTreeWidget>
 #include <KActionCollection>
 #include <KLocalizedString>
 #include <KStandardAction>
@@ -23,9 +23,10 @@ MainWindow::MainWindow(VMInfo* vmInfo, QWidget* parent)
     setCentralWidget(m_splitter);
 
     // the VM tree
-    m_vmView = new QTreeView(m_splitter);
+    m_vmView = new QTreeWidget(m_splitter);
     m_vmView->setHeaderHidden(true);
-    m_vmView->setModel(m_vmInfo);
+    m_vmInfo->setVmViewWidget(m_vmView);
+    m_vmInfo->refresh();
 
     // the VM display
     auto m_vmDisplay = new QLabel(m_splitter);
@@ -51,6 +52,14 @@ void MainWindow::setupActions() {
     actionCollection()->addAction(u"provider_add"_s, providerAddAction);
     actionCollection()->setDefaultShortcut(providerAddAction, Qt::CTRL | Qt::Key_A); // NOLINT(*-static-accessed-through-instance)
     connect(providerAddAction, &QAction::triggered, m_vmInfo, [=] { m_vmInfo->addProvider(this); });
+
+    // Refresh
+    auto refreshAction = new QAction(this);
+    refreshAction->setText(i18n("Refresh"));
+    refreshAction->setIcon(QIcon::fromTheme(u"view-refresh"_s));
+    actionCollection()->addAction(u"refresh"_s, refreshAction);
+    actionCollection()->setDefaultShortcut(refreshAction, Qt::Key_F5);
+    connect(refreshAction, &QAction::triggered, m_vmInfo, [=] { m_vmInfo->refresh(); });
 
     // Quit
     KStandardAction::quit(qApp, &QCoreApplication::quit, actionCollection());

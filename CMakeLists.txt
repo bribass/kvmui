@@ -52,6 +52,9 @@ install(TARGETS kvmui ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES src/kvmuiui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/kvmui)
 ecm_install_icons(DESTINATION share/icons ICONS
         icons/sc-apps-kvmui-hv-quickemu.svg
+        icons/sc-apps-kvmui-vm-paused.svg
+        icons/sc-apps-kvmui-vm-running.svg
+        icons/sc-apps-kvmui-vm-stopped.svg
 )
 
 # And summarize

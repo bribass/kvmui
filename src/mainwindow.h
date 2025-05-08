@@ -4,6 +4,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QTreeWidget>
 #include <KXmlGuiWindow>
 
 class QSplitter;
@@ -18,7 +19,7 @@ public:
 
 private:
     QSplitter* m_splitter;
-    QTreeView* m_vmView;
+    QTreeWidget* m_vmView;
     VMInfo* m_vmInfo;
 
     void setupActions();

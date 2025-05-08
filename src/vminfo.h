@@ -4,11 +4,12 @@
 #ifndef VMINFO_H
 #define VMINFO_H
 
-#include <QAbstractItemModel>
+#include <QObject>
 
+class QTreeWidget;
 class VMProvider;
 
-class VMInfo : public QAbstractItemModel {
+class VMInfo : public QObject {
     Q_OBJECT
 
 public:
@@ -18,19 +19,15 @@ public:
 
 public Q_SLOTS:
     void addProvider(QWidget* parent);
+    void refresh();
 
 public:
     void appendProvider(VMProvider* provider);
-
-    // QAbstractItemModel members
-    [[nodiscard]] QModelIndex index(int row, int column, const QModelIndex& parent) const override;
-    [[nodiscard]] QModelIndex parent(const QModelIndex& child) const override;
-    [[nodiscard]] int rowCount(const QModelIndex& parent) const override;
-    [[nodiscard]] int columnCount(const QModelIndex& parent) const override;
-    [[nodiscard]] QVariant data(const QModelIndex& index, int role) const override;
+    void setVmViewWidget(QTreeWidget* widget);
 
 private:
     QList<VMProvider*> m_providers;
+    QTreeWidget* m_vmViewWidget = nullptr;
 };
 
 #endif // VMINFO_H

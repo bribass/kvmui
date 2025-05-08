@@ -8,6 +8,10 @@
 
 using namespace Qt::Literals::StringLiterals;
 
+void VMProvider::setInfo(VMInfo* info) {
+    m_info = info;
+}
+
 QMap<QString, VMProvider*> VMProvider::s_types = {};
 
 bool VMProvider::register_provider(const char* name, VMProvider* provider) {

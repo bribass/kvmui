@@ -19,16 +19,20 @@ public:
     void toConfigJson(QJsonObject* obj) override;
 
     // Methods for providing UI elements for Add Provider wizard
-    [[nodiscard]] QString addDescription() const override;
+    [[nodiscard]] QListWidgetItem* getAddProviderSelectItem() const override;
     void addConfigure(VMProviderAddWizardConfigPage* page, QGridLayout* layout) override;
     VMProvider* addFinalize(VMProviderAddWizard* wizard) override;
 
     // Methods for providing UI elements for VMInfo model
-    [[nodiscard]] QString uiDescription() const override;
-    [[nodiscard]] QIcon uiIcon() const override;
+    [[nodiscard]] QTreeWidgetItem* getVmTreeItem() override;
+
+    // Manage individual VMs
+public:
+    void refresh() override;
 
 private:
     QString m_dir;
+    QStringList m_configs;
 };
 
 #endif // PROVIDERS_QUICKEMU_H

@@ -34,6 +34,7 @@ void VMProviderAddWizard::setStaticProvider(VMProvider* provider) {
 void VMProviderAddWizard::accept() {
     auto newProvider = m_provider->addFinalize(this);
     m_info->appendProvider(newProvider);
+    m_info->refresh();
     QWizard::accept();
 }
 
@@ -49,7 +50,7 @@ VMProviderAddWizardSelectPage::VMProviderAddWizardSelectPage(VMProvider** pProvi
 
     m_list = new QListWidget();
     for(auto it : VMProvider::get_providers()) {
-        auto item = new QListWidgetItem(it->uiIcon(), it->addDescription());
+        auto item = it->getAddProviderSelectItem();
         item->setData(Qt::UserRole, QVariant::fromValue(static_cast<void*>(it)));
         m_list->addItem(item);
     }

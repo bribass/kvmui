@@ -7,13 +7,19 @@
                          https://www.kde.org/standards/kxmlgui/1.0/kxmlgui.xsd">
     <MenuBar>
         <Menu>
+            <text>&amp;View</text>
+            <Action name="refresh" />
+        </Menu>
+        <Menu>
             <text>&amp;Providers</text>
-            <Action name="provider_add"/>
+            <Action name="provider_add" />
         </Menu>
     </MenuBar>
 
     <ToolBar name="mainToolBar">
         <text>Main Toolbar</text>
-        <Action name="provider_add"/>
+        <Action name="provider_add" />
+        <Separator />
+        <Action name="refresh" />
     </ToolBar>
 </gui>

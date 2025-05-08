@@ -3,12 +3,14 @@
 
 #include "providers/quickemu.h"
 
+#include <QDirIterator>
 #include <QFileDialog>
 #include <QGridLayout>
 #include <QJsonObject>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QTreeWidgetItem>
 #include <KLocalizedString>
 
 #include "vmprovideraddwizard.h"
@@ -30,8 +32,11 @@ void QuickemuProvider::toConfigJson(QJsonObject* obj) {
     obj->insert(u"dir"_s, m_dir);
 }
 
-QString QuickemuProvider::addDescription() const {
-    return i18n("Quickemu");
+QListWidgetItem* QuickemuProvider::getAddProviderSelectItem() const {
+    auto item = new QListWidgetItem();
+    item->setText(i18n("Quickemu"));
+    item->setIcon(QIcon::fromTheme(u"kvmui-hv-quickemu"_s));
+    return item;
 }
 
 void QuickemuProvider::addConfigure(VMProviderAddWizardConfigPage* page, QGridLayout* layout) {
@@ -59,10 +64,30 @@ VMProvider* QuickemuProvider::addFinalize(VMProviderAddWizard* wizard) {
     return retval;
 }
 
-QString QuickemuProvider::uiDescription() const {
-    return i18n("Quickemu (%1)", m_dir);
+QTreeWidgetItem* QuickemuProvider::getVmTreeItem() {
+    if(!m_vmTreeItem) {
+        m_vmTreeItem = new QTreeWidgetItem();
+        m_vmTreeItem->setText(0, i18n("Quickemu (%1)", m_dir));
+        m_vmTreeItem->setIcon(0, QIcon::fromTheme(u"kvmui-hv-quickemu"_s));
+    }
+    return m_vmTreeItem;
 }
 
-QIcon QuickemuProvider::uiIcon() const {
-    return QIcon::fromTheme(u"kvmui-hv-quickemu"_s);
+void QuickemuProvider::refresh() {
+    // Scan m_dir for *.conf files
+    QDirIterator it(m_dir, QStringList() << u"*.conf"_s, QDir::Files);
+    while(it.hasNext()) {
+        auto filename = it.next();
+        QFileInfo fileinfo(filename);
+        auto filebase = fileinfo.baseName();
+        if(!m_configs.contains(filebase)) {
+            auto item = new QTreeWidgetItem();
+            item->setText(0, filebase);
+            item->setIcon(0, QIcon::fromTheme(u"kvmui-vm-stopped"_s));
+            auto treeParent = getVmTreeItem();
+            treeParent->addChild(item);
+            treeParent->sortChildren(0, Qt::AscendingOrder);
+            m_configs.append(filebase);
+        }
+    }
 }

@@ -9,6 +9,9 @@
 
 class QIcon;
 class QGridLayout;
+class QListWidgetItem;
+class QTreeWidgetItem;
+class VMInfo;
 class VMProviderAddWizard;
 class VMProviderAddWizardConfigPage;
 
@@ -17,6 +20,10 @@ class VMProvider : public QObject {
 
 public:
     explicit VMProvider() = default;
+
+    void setInfo(VMInfo* info);
+protected:
+    VMInfo* m_info;
 
     // Registration of subclasses
 #define REGISTER_VMPROVIDER(x) static auto dummy = VMProvider::register_provider(#x, new (x));
@@ -36,14 +43,20 @@ public:
 
     // Methods for providing UI elements for Add Provider wizard
 public:
-    [[nodiscard]] virtual QString addDescription() const = 0;
+    [[nodiscard]] virtual QListWidgetItem* getAddProviderSelectItem() const = 0;
     virtual void addConfigure(VMProviderAddWizardConfigPage* page, QGridLayout *layout) = 0;
     virtual VMProvider* addFinalize(VMProviderAddWizard* wizard) = 0;
 
     // Methods for providing UI elements for VMInfo model
 public:
-    [[nodiscard]] virtual QString uiDescription() const = 0;
-    [[nodiscard]] virtual QIcon uiIcon() const = 0;
+    [[nodiscard]] virtual QTreeWidgetItem* getVmTreeItem() = 0;
+
+protected:
+    QTreeWidgetItem* m_vmTreeItem;
+
+    // Manage individual VMs
+public:
+    virtual void refresh() = 0;
 };
 
 #endif // VMPROVIDER_H
